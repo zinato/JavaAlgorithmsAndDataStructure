@@ -1,6 +1,23 @@
 package queue;
 
-public class ArrayQueue { //동적 원형 배열로 queue를 구현
+
+/**
+ * 원형 배열 Queue
+ * 성능 과 한계
+ *
+ * 1. 성능
+ * - 공간 복잡도 (n번의 enQueue연산에 대하여) : O(n)
+ * - enQueue()의 시간 복잡도 : O(1)
+ * - deQueue()의 시간 복잡도 : O(1)
+ * - isEmpty()의 시간 복잡도 : O(1)
+ * - isFull()의 시간 복잡도 : O(1)
+ * - getQueue()의 시간 복잡도 : O(1)
+ *
+ * 2. 한계
+ * - 큐의 최대 크기가 미리 정해져야하고 바뀌지 않는다. 꽉 찬 큐에 항목을 enQueue하면 원형 배열에서만 에러가 발생한다.
+
+ */
+public class ArrayQueue { // 원형 배열로 queue를 구현
     private int front;
     private int rear;
     private int capacity;
@@ -53,10 +70,10 @@ public class ArrayQueue { //동적 원형 배열로 queue를 구현
      */
     public int deQueue(){
         int data = 0;
-        if (isEmpty()) { //
+        if (isEmpty()) { //데이터를 삭제시 Queue가 비어있으면 에러를 throw 함.
             throw new EmptyQueueException();
         } else {
-          data = array[front]; //
+          data = array[front]; //원형 배열, 즉 Queue의 맨 앞요소를 data에 할당함.
           if (front == rear) { //계속 삭제해서 맨끝 요소 삭제 시
               front = rear -1;
           } else {
