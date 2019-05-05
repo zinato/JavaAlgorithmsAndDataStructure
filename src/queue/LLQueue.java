@@ -3,7 +3,7 @@ package queue;
 public class LLQueue {
     private LLNode frontNode; //headNode에 해당
     private LLNode rearNode; // lastNode에 해당
-    private LLQueue() {
+    public LLQueue() {
         this.frontNode = null;
         this.rearNode = null;
     }
@@ -37,6 +37,17 @@ public class LLQueue {
         }
         return data;
 
+    }
+
+    public int getQueueSize() {
+        if (frontNode == null) {
+            return 0;
+        }
+        int i = 0;
+        while (rearNode.getNext() == frontNode) {
+            i++;
+        }
+        return i;
     }
 
 }

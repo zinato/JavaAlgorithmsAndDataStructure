@@ -40,5 +40,4 @@ public class QueueWithTwoStacks {
             return stack2.pop();
         }
     }
-
 }
