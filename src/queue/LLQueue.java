@@ -43,11 +43,13 @@ public class LLQueue {
         if (frontNode == null) {
             return 0;
         }
-        int i = 0;
-        while (rearNode.getNext() == frontNode) {
-            i++;
+        int length = 0;
+        LLNode currentNode = null;
+        while (currentNode.getNext() != null) {
+            currentNode = frontNode.getNext();
+            length++;
         }
-        return i;
+        return length;
     }
 
 }
