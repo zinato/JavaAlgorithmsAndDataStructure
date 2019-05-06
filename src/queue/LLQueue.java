@@ -28,12 +28,12 @@ public class LLQueue {
     }
 
     public int deQueue(){
-        int data = 0;
-        if (isEmpty()) {
+        int data = 0; //data를 0으로 초기화
+        if (isEmpty()) { //isEmpty가 true이면 에러를 던진다.
             throw new ArrayQueue.EmptyQueueException();
         } else {
-            data = frontNode.getData();
-            frontNode = frontNode.getNext();
+            data = frontNode.getData(); //맨앞에있는 frontNode의 데이터를 가져와서 data에 할당함
+            frontNode = frontNode.getNext();//frontNode를 한칸 옮겨줌
         }
         return data;
 
