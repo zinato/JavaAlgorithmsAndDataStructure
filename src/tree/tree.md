@@ -244,7 +244,46 @@ Tree 이해
 
 ### 비재귀적 후위 탐색
 
-- 
+- 전위, 중위 탐색과 달리 두번 탐색하는 노드가 발생함. 
+- 두번째 방문에만 처리가 되어야 함.
+- 스택으로부터 항목을 pop한 뒤 이 항목과 스택의 최상위 항목의 오른쪽이 같은지 검사하여 왼쪽 서브트리를 끝내고 온 것인지 오른쪽 서브트리를
+끝내고 온 것인지 구분할 수 있다. 
+- 이 둘이 같다면 왼쪽 서브트리와 오른쪽 서브트리 처리를 마친 것이다. 스택을 한번 더 pop한 뒤 데이터를 출력한다.
+
+```
+   void PostOrderNonRecursive(BinaryTreeNode root){
+        LLStack stack = new LLStack();
+        while(1){
+            if (root != null) {
+                stack.push(root);
+                root = root.getLeft();
+            } else {
+                if (stack.isEmpty()) {
+                    System.out.println("Stack is Empty");
+                    return;
+                } else {
+                    if (stack.top().getRight() == null) {
+                        root = stack.pop();
+                        System.out.println(root.getData());
+                        if (root == stack.top().getRight()) {
+                            System.out.prinlnt(stack.top(stack.getData());
+                            stack.pop();
+                        }
+                    }
+                    if (!stack.isEmpty()) {
+                        root = stack.top().getRight();
+                    } else {
+                        root = null;
+                    }
+                }
+                
+            }
+        }
+        stack.deleteStack();
+   }
+   시간 복잡도 : O(n)
+   공간 복잡도 : O(n)
+``` 
   
   
   
