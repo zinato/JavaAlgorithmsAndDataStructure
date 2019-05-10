@@ -89,9 +89,9 @@ Tree 이해
 ### 이진트리의 구조 
 ```
  class BinaryTreeNode {
-    int data;
-    class BinaryTreeNode *left;
-    class BinaryTreeNode *right;
+    public int data;
+    public BinaryTreeNode left;
+    public BinaryTreeNode right;
  }
 ```
 - 데이터가 정수라고 가정. 데이터 필드를 가진다. 
@@ -285,7 +285,48 @@ Tree 이해
    공간 복잡도 : O(n)
 ``` 
   
-  
+### 전위, 중위, 후위 탐색의 선택방법
+
+- 순서는 중요하지 않고 노드를 전부 방문하기만 하면 된다면 3가지 방법 모두 상관이 없다. 
+- 자식 노드를 처리한 다음에 부모 노드를 처리해야 한다면 후위 탐색을 사용한다.
+- 부모 노드를 처리한 다음에 자식 노드를 처리해야 한다면 전위 탐색을 사용한다. 
+
+### 레벨 순서 탐색
+
+- 각 노드를 레벨 순으로 검사하는 탐색방법이다. 
+- 스택이 아니라 큐를 사용한다. 
+
+1. 뿌리 노드를 방문한다. 
+2. 레벨 l을 방문하는 동안 레벨 l+1의 모든 항목을 큐에 저장한다.
+3. 다음 레벨로 가서 그 레벨의 모든 노드를 방문한다. 
+4. 1~3을 모든 레벨이 끝날 때까지 반복한다. 
+
+```
+    void LevelOrder(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        LLQueue queue = new LLQueue();
+        if (root == null) {
+            return;
+        } else {
+            queue.enQueue(root);
+            while(!queue.isEmpty()){
+                temp = queue.deQueue();
+                //현재 노드 처리
+                System.out.println(temp.getData());
+                if (temp.getLeft()) { 
+                    queue.enQueue(temp.getLeft());
+                }                    
+                if (temp.getRight()) {
+                    queue.enQueue(temp.getRight());
+                }
+                queue.deleteQueue();
+            }
+        }
+    }
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(n) //최악의 경우 마지막 레벨의 모든 항목이 순차적으로 큐에 있을 수 있기 때문에
+```  
+ 
   
   
   
