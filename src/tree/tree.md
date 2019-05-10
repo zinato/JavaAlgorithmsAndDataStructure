@@ -89,9 +89,9 @@ Tree 이해
 ### 이진트리의 구조 
 ```
  class BinaryTreeNode {
-    public int data;
-    public BinaryTreeNode left;
-    public BinaryTreeNode right;
+    private int data;
+    private BinaryTreeNode left;
+    private BinaryTreeNode right;
  }
 ```
 - 데이터가 정수라고 가정. 데이터 필드를 가진다. 
