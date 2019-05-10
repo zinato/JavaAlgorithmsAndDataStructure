@@ -9,11 +9,15 @@ public class BinaryTreeNode {
         left = null;
         right = null;
     }
+
+    public void setData(int data){
+        this.data = data;
+    }
     public int getData() {
         return this.data;
     }
 
-    public BinaryTreeNode getLeft() {
+    public  BinaryTreeNode getLeft() {
         return this.left;
     }
 
