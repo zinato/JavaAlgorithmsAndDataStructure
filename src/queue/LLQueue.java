@@ -1,5 +1,6 @@
 package queue;
 
+//LinkedList로 구현한 Queue
 public class LLQueue {
     private LLNode frontNode; //headNode에 해당
     private LLNode rearNode; // lastNode에 해당
