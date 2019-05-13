@@ -88,6 +88,36 @@ public class Question {
         }
     }
 
+    //04. 재귀없이 이진 트리 안의 항목을 검색하는 알고리즘을 구하라.
+    /*
+        레벨 순서 탐색을 사용해서 풀 수 있다.
+        데이터를 출력하는 대신에 노드 데이터가 찾고 있는 항목과 같은지 검사한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+
+     */
+    public boolean SearchUsingLevelOrder(BinaryTreeNode root, int data) {
+        BinaryTreeNode temp;
+        LLQueue Q = new LLQueue();
+        if (!root) return false;
+        Q.enQueue(root);
+        while (!Q.isEmpty()) {
+            temp = Q.deQueue();
+            //여기서 발견되었는지 확인
+            if (data == root.getData())
+                return true;
+            if (temp.getLeft())
+                Q.enQueue(temp.getLeft());
+            if (temp.getRight())
+                Q.enQueue(temp.getRight());
+        }
+        Q.deleteQueue();
+        return false;
+    }
+
+}
+
 
 
 } // end of Question class
