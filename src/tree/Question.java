@@ -1,6 +1,7 @@
 package tree;
 
 import queue.LLQueue;
+import stack.LLStack;
 
 public class Question {
 
@@ -173,8 +174,255 @@ public class Question {
         }
     }
 
+    //07. 재귀없이 이진트리의 크기를 구하는 알고리즘을 구하라
+    /*
+        이것 역시 레벨순서 탐색을 사용하면 된다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+
+     */
+    public int SizeOfUsingLevelOrder(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        LLQueue Q = new LLQueue();
+        int count = 0;
+        if (root == null) return 0;
+        Q.enQueue(root);
+        while (!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            count++;
+            if (temp.getLeft())
+                Q.enQueue(temp.getLeft());
+            if (temp.getRight())
+                Q.enQueue(temp.getRight());
+        }
+        Q.deleteQueue();
+        return count;
+    }
+
+    //08.트리를 삭제하는 알고리즘을 구하라
+    /*
+        트리를 삭제하려면 노드를 모두 탐색하면서 하나씩 삭제해야한다.
+        후위 탐색은 트리를 정렬할 필요 없이 바로 삭제가 가능하다.
+        나머지 중위, 전위 탐색은 공간 복잡도를 추가로 필요하다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public void DeleteBinaryTree(BinaryTreeNode root) {
+        if (root == null) return;
+        //먼저 양쪽 서브 트리 모두 삭제
+        DeleteBinaryTree(root.getLeft());
+        DeleteBinaryTree(root.getRight());
+        //서브 트리 삭제 후 현재 노드 삭제
+        root = null; //자바에서는 가비지 컬렉터가 관리함.
+    }
 
 
+    //09. 레벨 순서 트리를 역순으로 출력하는 알고리즘을 만들어라.
+    /*
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+
+
+    public void LevelOrderTraversalInReverse(BinaryTreeNode root) {
+        LLQueue Q = new LLQueue();
+        LLStack S = new LLStack();
+        BinaryTreeNode temp;
+        if (root == null) return;
+        Q.enQueue(root);
+        while (!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            if (temp.getLeft())
+                Q.enQueue(temp.getLeft());
+            if (temp.getRight())
+                Q.enQueue(temp.getRight());
+            S.push(temp);
+        }
+        while (!S.isEmpty())
+            System.out.println(S.pop());
+    }
+
+    //10. 이진 트리의 높이 (혹은 깊이)를 구하는 알고리즘을 구하라.
+    /*
+        왼쪽과 오른쪽 서브 트리의 높이를 재귀적으로 계산해서 두 자식 각각의 높이에 1을 더한 값중 최대 값을
+        해당 노드의 높이로 할당.
+        DFS와 유사.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+
+    public int HeightBinaryTree(BinaryTreeNode root) {
+        int leftHeight, rightHieght;
+        if (root == null) return 0;
+        else {
+            //각 서브트리의 깊이를 계산한다.
+            leftHeight = HeightBinaryTree(root.getLeft());
+            rightHieght = HeightBinaryTree(root.getRight());
+            if (leftHeight > rightHieght) {
+                return (leftHeight + 1);
+            } else {
+                return (rightHieght + 1);
+            }
+        }
+    }
+
+    //11. 재귀 없이 높이를 구하는 알고리즘을 구하라.
+    /*
+        역시 레벨 순서 탐색을 사용한다.
+        BFS(Breadth First Search: 넓이 우선 탐색)와 유사하다.
+        높이의 끝은 null에 의해 검사된다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int FindHeightOfBinaryTree(BinaryTreeNode root) {
+        int level = 1;
+        LLQueue Q = new LLQueue();
+        if (root == null) return 0;
+        Q.enQueue(root);
+        //첫번째 레벨의 끝
+        Q.enQueue(null);
+        while (!Q.isEmpty()) {
+            root.setData(Q.deQueue());
+            //현재 레벨 종료
+            if (root == null) {
+                //다음 레벨을 위한 마커 추가
+                if(!Q.isEmpty())
+                    Q.enQueue(null);
+                    level++;
+            } else {
+                if(root.getLeft())
+                    Q.enQueue(root.getLeft());
+                if(root.getRight())
+                    Q.enQueue(root.getRight());
+            }
+        }
+        return level;
+    }
+
+    //12. 이진트리의 가장 깊은 노드를 찾는 알고리즘을 구하라.
+    /*
+        레벨 순서 탐색을 이용한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public BinaryTreeNode DeepestBinaryTree(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        LLQueue Q = new LLQueue();
+        if (root == null) return null;
+        Q.enQueue(root);
+        while(!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            if (temp.getLeft())
+                Q.enQueue(temp.getLeft());
+            if (temp.getRight())
+                Q.enQueue(temp.getRight());
+        }
+        Q.deleteQueue();
+        return temp;
+    }
+
+    //13. 트리로부터 항목을 삭제하는 알고리즘을 알아보자.
+    /*
+        1. 삭제 하려는 노드를 찾는다.
+        2. 트리에서 가장 깊은 노드를 찾는다.
+        3. 가장 깊은 노드의 데이터와 삭제할 노드의 데이터를 바꾼다.
+        4. 가장 깊은 노드를 삭제한다.
+     */
+
+    //14. 재귀를 사용하지 않고 트리안의 잎 노드들의 개수를 구하는 알고리즘을 구하라.
+    /*
+        레벨 순서 탐색을 이용
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int NumberOfLeavesInBTUsingLevelOrder(BinaryTreeNode root) {
+        BinaryTreeNode temp = null;
+        LLQueue Q = new LLQueue();
+        int count = 0;
+        if (root == null) return 0;
+        Q.enQueue(root);
+        while(!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            if (temp.getLeft() == null && temp.getRight() == null) //왼쪽 오른쪽 서브트리가 모드 null이면 그 노드는 leaf임.
+                count++;
+            else {
+                if (temp.getLeft() != null)
+                    Q.enQueue(temp.getLeft());
+                if (temp.getRight() != null)
+                    Q.enQueue(temp.getRight());
+            }
+        }
+        Q.deleteQueue();
+        return count;
+    }
+
+    //15. 재귀를 사용하지 않고 이진 트리 안의 포화 노드들의 개수를 구하는 알고리즘을 구하라.
+    /*
+        왼쪽 , 오른쪽 서브트리가 모두 null이 아니면 그 노드는 포화 노드이다.
+        레벨 순서 탐색을 사용한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int NumberOfFullNodesInBTUsingLevelOrder(BinaryTreeNode root) {
+        BinaryTreeNode temp = null;
+        LLQueue Q = new LLQueue();
+        int count = 0;
+        if (root == null) return 0;
+        Q.enQueue(root);
+        while (!Q.isEmpty()) {
+            if (root.getLeft() != null && root.getRight() != null) { //여기가 핵심!
+                count++;
+            } else {
+                if (root.getLeft() != null) {
+                    Q.enQueue(root.getLeft());
+                }
+                if (root.getRight() != null) {
+                    Q.enQueue(root.getRight());
+                }
+            }
+        }
+        Q.deleteQueue();
+        return count;
+    }
+
+    //16. 재귀를 사용하지 않고 이진 트리 안의 반포화 노드 (자식이 하나뿐인) 의 개수를 구하는 알고리즘을 구하라.
+    /*
+        레벨 순서 탐색을 사용한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+
+    public int NumberOfHalfNodesInUsingLevelOrder(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        LLQueue Q = new LLQueue();
+        int count = 0;
+        if (root == null) return 0;
+        Q.enQueue(root);
+        while(!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            if (root.getLeft() != null && root.getRight() == null ||
+                root.getLeft() == null && root.getRight() != null) { //반포화 노드인지 검사하는 부분
+                count++;
+            }
+            if (root.getLeft())
+                Q.enQueue(root.getLeft());
+            if (root.getRight())
+                Q.enQueue(root.getRight());
+        }
+        Q.deleteQueue();
+        return count;
+    }
+
+    //17. 주어진 두 개의 이진트리가 구조적으로 똑같다면 참을 리턴하는 함수를 만들어라.
 
 
 
