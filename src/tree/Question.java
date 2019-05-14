@@ -43,7 +43,7 @@ public class Question {
            공간복잡도: O(n)
      */
     public int FindMaxUsingLevelOrder(BinaryTreeNode root) {
-        BinaryTreeNode temp;
+        BinaryTreeNode temp = null;
         int max = Integer.MIN_VALUE;
         LLQueue Q = new LLQueue();
         Q.enQueue(root.getData());
@@ -53,13 +53,13 @@ public class Question {
                 max = temp.getData();
             }
             if (temp.getLeft()) {
-                Q.enQueue(temp.getLeft());
+                Q.enQueue(temp.getLeft().getData());
             }
             if (temp.getRight()) {
-                Q.enQueue(temp.getRight());
+                Q.enQueue(temp.getRight().getData());
             }
         }
-        Q.deleteQueue();
+        Q.deleteQueue(); //LLQueue에서 구현되지 않은 함수이기 때문에 에러가 발생함
         return max;
     } //에러가 발생함 타입이 잘 안맞는듯 함. 나중에 수정해야함
 
@@ -82,6 +82,7 @@ public class Question {
             temp = FindInBinaryTreeUsingRecursion(root.getLeft(), data);
             if (temp != true) {
                 return temp;
+
             } else {
                 return (FindInBinaryTreeUsingRecursion(root.getRight(), data));
             }
@@ -101,14 +102,14 @@ public class Question {
         BinaryTreeNode temp;
         LLQueue Q = new LLQueue();
         if (!root) return false;
-        Q.enQueue(root);
+        Q.enQueue(root.getData());
         while (!Q.isEmpty()) {
-            temp = Q.deQueue();
+            temp.setData(Q.deQueue());
             //여기서 발견되었는지 확인
             if (data == root.getData())
                 return true;
             if (temp.getLeft())
-                Q.enQueue(temp.getLeft());
+                Q.enQueue(temp.getLeft().getData());
             if (temp.getRight())
                 Q.enQueue(temp.getRight());
         }
@@ -116,7 +117,68 @@ public class Question {
         return false;
     }
 
-}
+    //05. 이진 트리에 항목을 삽입하는 알고리즘을 구하라.
+    /*
+        시간복잡도 : O(n)
+        공간복잡도 : O(n)
+     */
+    public void InsertBinaryTree(BinaryTreeNode root, int data) {
+        LLQueue Q = new LLQueue();
+        BinaryTreeNode temp = null;
+        BinaryTreeNode newNode = new BinaryTreeNode();
+        newNode.setLeft(null);
+        newNode.setRight(null);
+        if(newNode == null) {
+            System.out.println("Memory Error");
+            return;
+        }
+        if(root == null) {
+            root = newNode;
+            return;
+        }
+        Q.enQueue(root.getData());
+        while (!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            if (temp.getLeft()) {
+                Q.enQueue(temp.getLeft().getData());
+            } else {
+                temp.setLeft(newNode);
+                Q.deleteQueue();
+                return;
+            }
+            if (temp.getRight()) {
+                Q.enQueue(temp.getRight().getData());
+            } else {
+                temp.setRight(newNode);
+                Q.deleteQueue();
+                return;
+            }
+        }
+        Q.deleteQueue();
+
+    }
+
+    //06. 이진트리의 크기를 구하는 알고리즘을 구하라.
+    /*
+        왼쪽과 오른쪽 서브 트리의 크기를 재귀적으로 구해 1을 더해서 (현재 노드의) 부모노두에게 리턴한다.
+
+        시간복잡도 : O(n)
+        공간복잡도 : O(n)
+     */
+    public int SizeOfBinaryTree(BinaryTreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            return (SizeOfBinaryTree(root.getLeft()) + 1 + SizeOfBinaryTree(root.getRight()));
+        }
+    }
+
+
+
+
+
+
+
 
 
 
