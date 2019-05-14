@@ -53,6 +53,10 @@ public class LLQueue {
         return length;
     }
 
+    public void deleteQueue(){
+        //나중에 구현
+    }
+
 }
 
 class LLNode {
