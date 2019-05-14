@@ -17,8 +17,16 @@ public class BinaryTreeNode {
         return this.data;
     }
 
+    public void setLeft(BinaryTreeNode left) {
+        this.left = left;
+    }
+
     public  BinaryTreeNode getLeft() {
         return this.left;
+    }
+
+    public void setRight(BinaryTreeNode right) {
+        this.right = right;
     }
 
     public BinaryTreeNode getRight() {
