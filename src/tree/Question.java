@@ -423,7 +423,27 @@ public class Question {
     }
 
     //17. 주어진 두 개의 이진트리가 구조적으로 똑같다면 참을 리턴하는 함수를 만들어라.
+    /*
+        두 트리 모두 null 이면 true를 반환한다.
+        두 트리 모두 null이 아니라면 현재 노드 데이터 비교, 재귀적으로 왼쪽, 오른쪽 서브트리를 차례대로 비교한 값을 리턴한다.
 
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public boolean AreStructlySameTrees (BinaryTreeNode root1, BinaryTreeNode root2) {
+        //둘 다 비었으면 -> 1
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+        //둘다 비어있지 않을 경우 둘을 비교
+        return (root1.getData() == root2.getData() &&
+                AreStructlySameTrees(root1.getLeft(), root2.getLeft()) &&
+                AreStructlySameTrees(root1.getRight() ,root2.getRight()));
+
+    }
 
 
 
