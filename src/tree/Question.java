@@ -446,6 +446,73 @@ public class Question {
     }
 
 
+    //18. 이진 트리의 지름을 구하는 알고리즘을 구하라. 트리의 지름(너비)는 트리 안에서 두 잎 노드 사이의 길이가 가장 길 때의 노드의 개수이다.
+    /*
+        왼쪽 서브트리의 지름을 계산하고 으른쪽 서브트리의 지름을 재귀적으로 계산한다. 이 두 값 중에 최대 값에 현재 레벨(+1)을 더한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int DiameterOfTree(BinaryTreeNode root, int diameter) {
+        int left, right;
+        if (root == null) return 0;
+        left = DiameterOfTree(root.getLeft(), diameter);
+        right = DiameterOfTree(root.getRight(), diameter);
+        if (left + right > diameter)
+            diameter = left + right;
+        return Math.max(left, right) + 1;
+
+    }
+
+    //19. 이진 트리에서 합이 제일 큰 레벨을 찾는 알고리즘을 구하라.
+    /*
+        레밸의 개수를 구하는 방식과 비슷하다.
+        차이점은 합을 계속 저장해야한다는 것.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int FindLevelWithMaxSum(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        int level = 0, maxLevel = 0;
+        LLQueue Q = new LLQueue();
+        int currentSum = 0, maxSum = 0;
+        if(root == null) return 0;
+        Q.enQueue(root);
+        Q.enQueue(null); //첫번째 레벨의 끝
+        while (!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            //현재 레벨이 끝나면 합을 비교
+            if (temp == null) {
+                if (currentSum > maxSum) {
+                    maxSum = currentSum;
+                    maxLevel = level;
+                }
+                currentSum = 0;
+                //다음 레벨의 끝을 나타내는 표지를 큐의 끝에 추가.
+                if (!Q.isEmpty())
+                    Q.enQueue(null);
+                level++;
+            } else {
+                currentSum += temp.getData();
+                if (temp.getLeft())
+                    Q.enQueue(temp.getLeft());
+                if (temp.getRight())
+                    Q.enQueue(temp.getRight());
+            }
+        }
+        return maxLevel;
+    }
+
+    //20. 주어진 이진 트리에 대해 뿌리에서 잎까지의 모든 경로를 출력하라.
+    public void printPaths() {
+        int[] path = new int[256];
+        printPaths(node, path, 0);
+    }
+    private void printPaths(BinaryTreeNode node, int[] path, int pathLen) {
+
+    }
+
 
 
 
