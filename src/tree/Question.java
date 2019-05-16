@@ -505,15 +505,35 @@ public class Question {
     }
 
     //20. 주어진 이진 트리에 대해 뿌리에서 잎까지의 모든 경로를 출력하라.
+     /*
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
     public void printPaths() {
         int[] path = new int[256];
         printPaths(node, path, 0);
     }
     private void printPaths(BinaryTreeNode node, int[] path, int pathLen) {
+        if (node == null) return;
+        //이 노드를 경로 배열에 추가
+        path[pathLen] = node.getData();
+        pathLen++;
+        //leaf노드 이므로 여기까지 오는 경로를 출력한다.
+        if (node.getLeft()==null && node.getRight() == null) {
+            printArray(path, pathLen);
+        } else { //아니라면 서브트리 모두 시도
+            printPaths(node.getLeft(), path, pathLen);
+            printPaths(node.getRight(), path, pathLen);
 
+        }
     }
-
-
+    private void printArray(int[] ints, int len) {
+        for (int i = 0; i < len; i++) {
+            System.out.print(ints[i] + " ");
+        }
+        System.out.println();
+    }
 
 
 
