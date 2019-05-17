@@ -573,8 +573,29 @@ public class Question {
     /*
         레벨순서탐색으로 해결 할 수 있다.
 
-     */
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n
 
+     */
+    public int SumOfUsingLevelOrder(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        LLQueue Q = new LLQueue();
+        int sum = 0;
+        if (root == null) return 0;
+        Q.enQueue(root);
+        while (!Q.isEmpty()) {
+            temp.setData(Q.deQueue());
+            sum += temp.getData();
+            if (temp.getLeft() != null)
+                Q.enQueue(root.getLeft());
+            if (temp.getRight() != null)
+                Q.enQueue(root.getRight());
+        }
+        Q.deleteQueue();
+        return sum;
+    }
+
+    
 
 
 
