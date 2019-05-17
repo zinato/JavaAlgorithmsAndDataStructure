@@ -535,6 +535,48 @@ public class Question {
         System.out.println();
     }
 
+    //21. 주어진 합을 가지는 경로가 존재하는지 검사하는 알고리즘을 구하라.
+    /*
+        자식 노드에 대해 재귀적으로 호출하기 전에 주어진 합으로부터 현재 노드의 값을 뺴서 트리 끝에 도달했을 때 이 합이 0이 되는지 검사한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public boolean hasPathSum(int sum) {
+        return (hasPathSum(root, sum));
+    }
+    public boolean hasPathSum(BinaryTreeNode node, int sum) {
+        //트리 끝에 도달했고 sum == 0 이면 참을 리턴
+        if (node == null) {
+            return (sum == 0);
+        } else { //그렇지 않으면 양쪽 서브트리 모두 검사
+            int subSum = sum - node.getData();
+            return (hasPathSum(node.getLeft(), subSum) || hasPathSum(node.getRight(), subSum));
+        }
+    }
+
+    //22. 이진트리의 모든 항목의 합을 구하라.
+    /*
+        재귀적으로 왼쪽 서브트리의 합 + 오른쪽 서브 트리의 합을 구한다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int Add(BinaryTreeNode root) {
+        if (root == null) return 0;
+        else
+            return (root.getData() + Add(root.getLeft()) + Add(root.getRight()));
+
+    }
+
+    //23. Q.22를 재귀 없이 풀어라.
+    /*
+        레벨순서탐색으로 해결 할 수 있다.
+
+     */
+
+
+
 
 
 } // end of Question class
