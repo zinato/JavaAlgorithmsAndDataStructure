@@ -32,4 +32,11 @@ public class BinaryTreeNode {
     public BinaryTreeNode getRight() {
         return this.right;
     }
+
+    public int Add(BinaryTreeNode root) {
+        if (root == null) return 0;
+        else
+            return (root.getData() + Add(root.getLeft()) + Add(root.getRight()));
+
+    }
 }
