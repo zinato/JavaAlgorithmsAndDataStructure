@@ -595,6 +595,44 @@ public class Question {
         return sum;
     }
 
+    //24. 트리를 대칭형으로 변환시키는 알고리즘을 구하라. 트리의 대칭형은 모든 잎이 아닌 노드의 왼쪽, 오른쪽 자식들이 뒤바뀐 트리이다.
+      /*
+        각자의 서브트리를 바꾼다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n
+
+     */
+    public BinaryTreeNode MirrorOfBinaryTree(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        if (root != null) {
+            MirrorOfBinaryTree(root.getLeft());
+            MirrorOfBinaryTree(root.getRight());
+            //서브트리를 서로 바꾼다.
+            temp = root.getLeft();
+            root.setLeft(root.getRight());
+            root.setRight(temp);
+        }
+        return root;
+    }
+
+    //25. 주어진 두개의 트리에 대해 서로가 대칭형인지 아닌지 검사하는 알고리즘을 구하라.
+    /*
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n
+
+     */
+    public boolean AreMirrors(BinaryTreeNode root1, BinaryTreeNode root2) {
+        if (root1 == null && root2 == null)
+            return true;
+        if (root1 == null || root2 == null)
+            return false;
+        if (root1.getData() != root2.getData())
+            return false;
+        else return (AreMirrors(root1.getLeft(), root2.getRight()) && AreMirrors(root1.getRight(), root2.getLeft()));
+
+    }
 
 
 
