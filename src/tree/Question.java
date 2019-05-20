@@ -634,6 +634,29 @@ public class Question {
 
     }
 
+    //26. 중위, 전위 탐색 결과로부터 이진 트리를 만드는 알고리즘을 구하라.
+    public BinaryTreeNode BuildBinaryTree(int inOrder[], int preOrder[], int inStrt, int inEnd) {
+        int preIndex = 0;
+        BinaryTreeNode newNode = new BinaryTreeNode();
+        if(newNode == null) {
+            System.out.println("Memory error");
+            return null;
+        }
+        //전위 탐색으로부터 preIndex를 사용하여 현재노드를 선택한다.
+        newNode.setData(preOrder[preIndex]);
+        preIndex++;
+        if (inStrt == inEnd) //이 노드에 자식이 없으면 리턴한다.
+            return newNode;
+        //그렇지 않으면 이 노드의 인덱스를 중위 탐색으로부터 찾는다.
+        int inIndex = Search(inOrder, inStrt, inEnd, newNode.getData());
+        //중위 탐색의 인덱스를 사용하여 왼쪽, 오른쪽 서브트리를 생성한다.
+        newNode.setLeft(BuildBinaryTree(inOrder, preOrder, inStrt, inIndex - 1));
+        newNode.setRight(BuildBinaryTree(inOrder, preOrder, inIndex+1, inEnd));
+        return  newNode;
+
+
+    }
+
 
 
 
