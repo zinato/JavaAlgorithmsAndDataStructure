@@ -3,6 +3,8 @@ package tree;
 import queue.LLQueue;
 import stack.LLStack;
 
+import java.util.Stack;
+
 public class Question {
 
     //00. 노드의 개수를 구하는 알고리즘을 구하여라
@@ -620,7 +622,7 @@ public class Question {
     /*
 
         시간 복잡도 : O(n)
-        공간 복잡도 : O(n
+        공간 복잡도 : O(n)
 
      */
     public boolean AreMirrors(BinaryTreeNode root1, BinaryTreeNode root2) {
@@ -653,11 +655,107 @@ public class Question {
         newNode.setLeft(BuildBinaryTree(inOrder, preOrder, inStrt, inIndex - 1));
         newNode.setRight(BuildBinaryTree(inOrder, preOrder, inIndex+1, inEnd));
         return  newNode;
-
-
     }
 
+    //27. 두개의 탐색순열이 주어진다면 이진트리를 유일하게 만들 수 있는가?
+    /*
+        둘 중 하나라도 중위 탐색이 있으면 가능하다.
+        - 중위 와 전위
+        - 중위 와 후위
+        - 중위와 레벨 순서
 
+        다음의 조합으로는 유일한 트리를 만들 수 없다.
+        - 후위와 전위
+        - 전위와 레벨 순서
+        - 후위와 레벨 순서
+        예를 들어 다음 트리 들에 대해 전위, 레벨 순서, 후위 탐색이 같다.
+                A     A
+               /       \
+              B         B
+       전위 탐색 = AB 후위탐색 = BA 레벨순서 탐색 = AB
+       위의 세개개 주어져도 트리를 만들 수 없다.
+     */
+
+    //28. 이진트리에서 어떤 노드의 모든 조상들을 출력하는 알고리즘을 구하라.
+    /*
+        깊이 우선 탐색 (DFS)를 통해 재귀적으로 해결할 수 있다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : 재귀를 위해 O(n)
+     */
+    public int PrintAllAncestors(BinaryTreeNode root, BinaryTreeNode node) {
+        if (root == null) return 0;
+        if (root.getLeft() == node || root.getRight() == node ||
+            PrintAllAncestors(root.getLeft(), node) || PrintAllAncestors(root.getRight(), node)) {
+            System.out.println(root.getData());
+            return 1;
+        }
+        return 0;
+    }
+
+    //29. 이진트리에서 두 노드의 최소공통조상(LCA)를 찾는 알고리즘을 구하라.
+    /*
+        시간 복잡도 : O(n)
+        공간 복잡도 : 재귀를 위해 O(n)
+     */
+    public BinaryTreeNode LCA(BinaryTreeNode root, BinaryTreeNode alpha, BinaryTreeNode beta) {
+        BinaryTreeNode left, right;
+        if (root == null)
+            return root;
+        if (root == alpha || root == beta)
+            return root;
+        left = LCA(root.getLeft(), alpha, beta);
+        right = LCA(root.getRight(), alpha, beta);
+        if (left != null && right != null) return root;
+        else return (left != null ? left : right);
+    }
+
+    //30. 지그재그 트리 탐색 : 이진 트리를 지그재그 순서로 탐색하는 알고리즘을 구하라.
+    // 다음 예제의 트리 결과는 1 3 2 4 5 6 7 이다.
+                 1
+               /   \
+              2     3
+             / \   / \
+            4   5  6  7
+    /*
+        두 개의 스택을 사용하면 쉽게 풀 수 있다.
+        currentLevel과 nextLevel로 두 개의 스택을 정하고 현재 레벨의 순서를 추적하기 위한 변수가 하나 더 필요하다.
+        currentLevel 스택으로부터 팝해서 노드의 값을 출력한다. 현재 레벨의 순서가 왼쪽에서 오른쪽일 때마다 노드의 왼쪽 자식, 그리고
+        오른쪽 자식을 nextLevel 스택에 푸시한다. 다음 level에 노드들이 nextLevel에서 팝이 될 때 역순이된다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : 두개의 스택을 위한 공간 = O(n) + O(n) = O(n)
+     */
+
+    //구현되지 않은 함수들이 많음 추후에 다시 구현
+    public voi ZigZagTraversal(BinaryTreeNode root) {
+        BinaryTreeNode temp;
+        boolean leftToRight = true;
+        if (root == null) return;
+        Stack currentLevel = new CreateStack(), nextLevel = new CreateStack();
+        Push(currentLevel, root);
+        while (!isEmpty(currentLevel)) {
+            temp = Pop(currentLevel);
+            if (temp != null) {
+                System.out.println(temp.getData());
+                if (leftToRight) {
+                    if (temp.getLeft() != null)
+                        Push(nextLevel, temp.getLeft());
+                    if (temp.getRight() != null)
+                        Push(nextLevel, temp.getRight());
+                } else {
+                    if (temp.getRight() != null)
+                        Push(nextLevel, temp.getRight());
+                    if (temp.getLeft() != null)
+                        Push(nextLevel, temp.getLeft())
+                }
+            }
+            if (isEmpty(currentLevel)) {
+                leftToRight = false;
+                swap(currentLevel, nextLevel);
+            }
+        }
+    }
 
 
 
