@@ -327,7 +327,42 @@ Tree 이해
     공간 복잡도 : O(n) //최악의 경우 마지막 레벨의 모든 항목이 순차적으로 큐에 있을 수 있기 때문에
 ```  
  
-  
+## 범용 트리 (N항 트리)
+
+- 자식 노드가 4~5 개 이상이 되는 트리들은 어떻게 표현할 수 있을까? 각각을 메모리를 할당하여 표현하면 메모리 낭비가 너무 심하다. 
+
+### 범용 트리의 표현
+
+- 각 노드에서 부모가 같은 노드(형제 노드)들을 왼쪽에서 오른쪽으로 연결을 한다.
+- 첫번째 자식을 제외한 나머지 노드와의 연결을 삭제한다. 
+- 노드의 구성은 요소, 첫번째 자식, 다음 형제 로 구성된다. 
+```
+    public class TreeNode {
+        public int data;
+        public TreeNode firstChild;
+        public TreeNode nextSibling;
+        public int getData() {
+            return data;
+        }
+        public void setData(int data) {
+            this.data = data;
+        }
+        public TreeNode getFirstChild(){
+            return firstChild;
+        }
+        public void setFirstChild(TreeNode firstChild) {
+            this.firstChild = firstChild;
+        }
+        public TreeNode getNextSibling(){
+            return nextSibling;
+        }
+        public void setNextSibling(TreeNode nextSibling) {
+            this.nextSibling = nextSibling;
+        }
+    }
+```
+- 어떤 범용 트리라도 이진 트리로 표현할 수 있기 때문에 실무에서는 이진 트리만 사용한다.
+ 
   
   
   
