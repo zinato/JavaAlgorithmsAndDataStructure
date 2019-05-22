@@ -728,7 +728,7 @@ public class Question {
      */
 
     //구현되지 않은 함수들이 많음 추후에 다시 구현
-    public voi ZigZagTraversal(BinaryTreeNode root) {
+    public void ZigZagTraversal(BinaryTreeNode root) {
         BinaryTreeNode temp;
         boolean leftToRight = true;
         if (root == null) return;
@@ -755,6 +755,105 @@ public class Question {
                 swap(currentLevel, nextLevel);
             }
         }
+    }
+
+    //31. 이진트리의 세로 합을 구하라 .
+    /*
+        이해가 잘되지 않음 나중에 다시 풀이.
+     */
+
+    //32 n개의 노드를 가진 이진 트리의 종류는 최대 얼마인가
+    /*
+        2^n-n 개이다.
+     */
+
+    //33. 잎 노드 'L' 이라고 표시되고 중간노드는 'I'라고 표시되는 특별한 속성을 가진 트리가 주어진다. 또한 각 노드에는 0개 혹은 두개의 자식 노드가
+    //있다. 이 트리에 대해 전위 탐색이 주어질 때 이 트리를 생성하라.
+    //예 : 주어진 문자열 : I L I L L
+    /*
+        위 문자열로 트리를 만들면 아래와 같은 트리를 갖는다.
+                I
+               / \
+              L   I
+                 / \
+                L   L
+        1. 자식이 0 또는 2개 이므로 자식이 한개라도 있으면 그 형제 노드도 존재한다고 볼 수 있다.
+        그러므로 서브 트리를 계산할 때 형제 서브트리도 계산해야 한다.
+
+        2. 'L'을 만나면 잎 노드이므로 해당 서브트리를 거기서 멈출수 있다. 만약 'L'노드가 부모 노드의 오른쪽 자식이며 상위 계층으로 올라가서 계산할
+        다음 서브트리를 찾아야 한다.
+
+        시간 복잡도 : O(n)
+     */
+    public BinaryTreeNode BuildTreeFromPreOrder(char[] A, int i) {
+        if (A == null) return null;
+        BinaryTreeNode newNode = new BinaryTreeNode();
+        newNode.setData(A[i]);
+        newNode.setLeft(null);
+        newNode.setRight(null);
+        if (A[i] == 'L') { //잎 노드에 도달하면 return
+            return newNode;
+        }
+        i = i + 1;// 왼쪽 서브트리를 만든다.
+        newNode.setLeft(BuildTreeFromPreOrder(A, i));
+        i = i + 1;// 오른쪽 서브트리를 만든다.
+        newNode.setRight(BuildTreeFromPreOrder(A, i));
+        return newNode;
+    }
+
+    //34. 이진 트리와 세 개의 포인터(left, right, nextSibling)가 주어졌을 때 초기값이 null인 nextSibling 포인터들의 값을 채우는
+    //알고리즘을 구하라.
+    /*
+        간단한 큐를 사용하여 문제를 풀 수 있다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public void FillNextSiblings(BinaryTreeNode root) {
+        LLQueue Q = new LLQueue();
+        BinaryTreeNode temp = new BinaryTreeNode();
+        if (root == null) return;
+        Q.enQueue(root);
+        Q.enQueue(null);//끝 부분 표시
+        while (!Q.isEmpty()) {
+            root.setData(Q.deQueue());
+            //현재 레벨 완료
+            if (root == null) {
+                //다음 레벨을 위한 또 다른 라벨을 넣는다.
+                if(!Q.isEmpty())
+                    Q.enQueue(null);
+            } else {
+                temp.setNextSibling(Q.getFront());//함수가 아직 구현되어 있지 않음
+                if (root.getLeft() != null)
+                    Q.enQueue(root.getLeft());
+                if (root.getRight() != null)
+                    Q.enQueue(root.getRight());
+            }
+        }
+
+    }
+
+    //35. 문제 34를 푸는 다른 방법은?
+    /*
+        nextSiblings 포인터들을 다시 사용하는 것이다.
+        left와 right 재귀 함수에게 보내기 전에 오른쪽 자식 노드의 nextSibling을 현재 노드의 nextSibling의 왼쪼 자식 노드에게 연결시킨다.
+        현재 노드의 nextSibling 값이 채워줘야 한다.
+
+        시간 복잡도 : O(n)
+     */
+    public void FillNextSiblings2(BinaryTreeNode root) {
+        if (root == null) return;
+        if (root.getLeft() != null)
+            root.getLeft().nextSibling(root.getRight());
+        if (root.getRight() != null)
+            if (root.getNextSibling()) {
+                root.getRight().setNextSibling(root.getNextSibling().getLeft());
+            } else {
+                root.getRight().setNextSibling(null);
+            }
+        FillNextSiblings2(root.getLeft());
+        FillNextSiblings2(root.getRight());
+
     }
 
 
