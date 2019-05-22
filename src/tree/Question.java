@@ -855,6 +855,28 @@ public class Question {
         FillNextSiblings2(root.getRight());
 
     }
+    //범용 트리 문제
+    //36. 주어진 트리에 대해 모든 항목의 합을 구하는 알고리즘을 구하라.
+    /*
+       시간 복잡도 : O(n)
+       공간 복잡도 : 스택 공간을 생각하지 않는다면 O(1). 그렇지 않으면 O(n).
+     */
+    public int FindSum(TreeNode root) {
+        if (root == null) return 0;
+        return (root.getData() + FindSum(root.getFirstChild()) + FindSum(root.getNextSibling()))
+    }
+
+    //37. 4항 트리에 대하여 100개의 노드를 가진 트리의 최대 높이를 구하라. 한개의 노드의 높이는 0으로 가정한다.
+    /*
+        한개의 노드만 4개의 자식을 가지고 나머지는 모두 한개의 자식을 갖도록 하면 된다.
+        노드의 높이는 0부터 시작하므로 n-4 로 하면 답을 구할 수 있다.
+        정답은 96.
+     */
+
+    //39. P[i]가 i번째 노드의 부모를 뜻하는 부모 배열 P가 주어졌을 때 트리의 높이 혹은 깊이를 구하는 알고리즘을 구하라.
+    /*
+        P 배열 : -1 , 0 , 1, 6, 6, 0, 0, 2, 7
+     */
 
 
 
