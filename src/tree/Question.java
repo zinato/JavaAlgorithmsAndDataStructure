@@ -913,12 +913,47 @@ public class Question {
         시간 복잡도 : O(n)
         공간 복잡도 : O(n)
      */
-    public int IsIsomorphic(TreeNode root1, TreeNode root2) {
+    public boolean IsIsomorphic(TreeNode root1, TreeNode root2) {
         if (root1 == null && root2 == null)
-            return 1;
+            return true;
         if ((root1 == null && root2 != null) || (root1 != null && root2 == null))
-                return 0;
+                return false;
         return (IsIsomorphic(root1.getLeft(), root2.getLeft) && IsIsomorphic(root1.getRight(), root2.getRight()));
+    }
+
+    //42. 두 트리가 준-동형 트리인지 검사하는 알고리즘을 구하라.
+    /*
+        각 노드의 값은 중요하지 않고 형태만 중요하다.
+
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+
+     */
+    public boolean QuasiIsomorphic(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null)
+            return true;
+        if ((root1 == null && root2 != null) || (root1 != null && root2 == null))
+            return false;
+        return (QuasiIsomorphic(root1.getLeft(), root2.getLeft()) &&
+                QuasiIsomorphic(root1.getRight(), root2.getRight()) ||
+                QuasiIsomorphic(root1.getRight(), root2.getLeft()) &&
+                QuasiIsomorphic(root1.getRight(), root2.getLeft()));
+
+    }
+
+    //43. 범용 트리의 주어진 노드에 대해 자식 노드 개수를 세는 알고리즘을 구하라
+    /*
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(1)
+     */
+    public int ChildCount(TreeNode current) {
+        int count = 0;
+        current = current.getFirstChild();
+        while (current != null) {
+            count++;
+            current = current.getNextSibling()
+        }
+        return count;
     }
 
 
