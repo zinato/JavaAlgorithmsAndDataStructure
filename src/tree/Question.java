@@ -876,7 +876,50 @@ public class Question {
     //39. P[i]가 i번째 노드의 부모를 뜻하는 부모 배열 P가 주어졌을 때 트리의 높이 혹은 깊이를 구하는 알고리즘을 구하라.
     /*
         P 배열 : -1 , 0 , 1, 6, 6, 0, 0, 2, 7
+        주어진 배열은 부모를 배열을 나타낸다. 각 노드에서 시작해서 -1에 닿을때까지 부모 노드로 계속 올라가면서 각 노드 중 최대 깊이를
+        추적하면 된다.
+
+        시간 복잡도 : O(n^2)
+        공간 복잡도 : O(1)
      */
+    public int FindDepthInGenericTree(int P[], int n) {
+        int maxDepth = -1, currentDepth = -1, j;
+        for (int i = 0; i < n; i++) {
+            currentDepth = 0; j = i;
+            while(P[j] != -1) {
+                currentDepth++; j = P[j];
+            }
+            if (currentDepth > maxDepth)
+                maxDepth = currentDepth;
+        }
+        return maxDepth;
+    }
+
+    //40. 범용트리의 주어진 노드의 형제 노드의 수를 구하라.
+    /*
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(1)
+     */
+    public int SiblingsCount(TreeNode current){
+        int count = 0;
+        while (current != null) {
+            count++;
+            current = current.getNextSibling();
+        }
+        return count;
+    }
+    //41. 주어진 두개의 트리가 있을 때 이 두 트리가 동형인지 아닌가 구하는 알고리즘을 구하라.
+    /*
+        시간 복잡도 : O(n)
+        공간 복잡도 : O(n)
+     */
+    public int IsIsomorphic(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null)
+            return 1;
+        if ((root1 == null && root2 != null) || (root1 != null && root2 == null))
+                return 0;
+        return (IsIsomorphic(root1.getLeft(), root2.getLeft) && IsIsomorphic(root1.getRight(), root2.getRight()));
+    }
 
 
 
