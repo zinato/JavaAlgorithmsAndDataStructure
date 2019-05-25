@@ -951,9 +951,57 @@ public class Question {
         current = current.getFirstChild();
         while (current != null) {
             count++;
-            current = current.getNextSibling()
+            current = current.getNextSibling();
         }
         return count;
+    }
+
+    //44. 포화 k항 트리는 모든 노드가 0개 혹은 k개의 자식 노드를 가지는 트리이다. 포화 k항 트리의 전위 탐색 결과 배열이 주어졌을 때
+    //포화 k항 트리를 구성하는 알고리즘을 구하라.
+    /*
+        k항 트리에 대해 노드의 자식들은 k*i+1 에서 k*i+k 이다.
+        이전에 생성된 노드에 상관 없이 노드를 계속 만들기만 하면 된다.
+     */
+    public class KaryTreeNode {
+        public int data;
+        public KaryTreeNode[] child;
+        public KaryTreeNode(int k){
+            child = new KaryTreeNode[k];
+        }
+        public void setData(int dataInput){
+            data = dataInput;
+        }
+        public int getChild() {
+            return this.data;
+        }
+        public int setChild(int i, KaryTreeNode childNode) {
+            child[i] = childNode;
+        }
+        public KaryTreeNode getChild(int i) {
+            return child[i];
+        }
+
+        int Ind = 0;
+        KaryTreeNode BuildKarayTree(int A[], int n, int k) {
+            if (n <= 0)
+                return null;
+            KaryTreeNode newNode = new KaryTreeNode(k);
+            if (newNode == null)
+                System.out.println("Memory error");
+                return null;
+            newNode.setData(A[Ind]);
+            for (int i = 0; i < k; i++) {
+                if (k * Ind + i < n){
+                    Ind++;
+                    newNode.setChild(Ind, BuildKarayTree(A, n, k));
+                } else {
+                    newNode.setChild(Ind,null);
+                }
+
+            }
+                return newNode;
+        }
+
     }
 
 
