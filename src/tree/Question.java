@@ -747,7 +747,7 @@ public class Question {
                     if (temp.getRight() != null)
                         Push(nextLevel, temp.getRight());
                     if (temp.getLeft() != null)
-                        Push(nextLevel, temp.getLeft())
+                        Push(nextLevel, temp.getLeft());
                 }
             }
             if (isEmpty(currentLevel)) {
