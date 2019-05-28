@@ -561,10 +561,187 @@ Tree 이해
     공간 복잡도 : O(1)
     
 ```    
+
+## 이진 검색 트리 (BST: Binary Search Tree)
+
+### 왜 이진 검색 트리인가?
+
+- 이 트리의 주 용도는 검색이다.
+- 이전 트리들은 데이터에 제한을 두지 않아 검색을 하려면 왼쪽 오른쪽 서브트리를 모두 검사해야하므로 최악의 경우 복잡도는 O(n)이다. 
+- 이진 검색 트리는 데이터에 제한을 둔다. 최악의 경우 복잡도는 O(logn) 이다. 
+
+### 이진 검색 트리의 속성 
+
+- 왼쪽 서브 트리의 노드 값들은 노드(뿌리)의 키 값보다 작은 값들로 구성되어야 한다.
+- 오른쪽 서브 트리의 값들은 노드(뿌리)의 키 값보다 큰 값으로 구성되어야 한다. 
+- 왼쪽, 오른쪽 서브 트리 모두 이진 검색 트리여야 한다. 
   
+### 이진 검색 트리의 연산
+
+- 주 연산 
+    1. 이진 검색 트리의 항목 찾기, 최소값 찾기, 최대 값 찾기
+    2. 이진 검색 트리에 새 항목 삽입하기
+    3. 이진 검색 트리로부터 항목 삭제하기
+    
+- 보조 연산
+    1. k번째 작은 항목 찾기
+    2. 이진 검색 트리의 항목 정렬하기 등등 
+    
+### 이진 검색 트리에 대한 주요 사항
+
+- root 데이터가 항상 왼쪽 서브 트리 , 오른쪽 서브 트리 사이에 있기 때문에 중위 탐색을 하면 정렬된 리스트가 만들어 진다. 
+- 이진 검색 트리를 이용해 문제를 풀 때 대부분 왼쪽 서브트리를 먼저 처리하고 root 데이터를 처리 후 오른쪽 서브트리를 처리한다. 문제에 따라 
+root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다. 
+- 값에 따라 왼쪽, 오른쪽 둘 중 하나만 검색한다. 
+
+### 이진 검색 트리에서 항목 찾기 
   
+- 찾는 데이터가 root 면 현재 노드를 리턴, 현재 root의 값보다 작으면 왼쪽 서브트리를 탐색, root 값보다 크면 오른쪽 서브트리를 탐색해서 찾는다. 
+- 찾는 데이터가 없으면 NULL을 리턴. 
+
+```
+     public BinarySearchTreeNode Find(BinarySearchTreeNode root, int data) {
+        if (root == null) return null;
+        if (data < root.getData()) {
+            return (Find(root.getLeft(), data)));
+        } else if (data > root.getData()) {
+            return (Find(root.getRight(), data);
+        }
+        return root;
+     }
+     
+     시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
+     공간 복잡도 : 재귀적 스택 때문에 O(n)
+     
+ - 비 재귀적 방법
+    public BinarySearchTreeNode Find(BinarySearchTreeNode root, int data) {
+        if (root == null) return null;
+        while(root != null) {
+            if (data == root.getData()) {
+                return root;
+            } else if (data > root.getData()) {
+                root = root.getRight();
+            } else {
+                root = root.getLeft();
+            }
+        }
+        return null;
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+ 
+```  
+
+### 이진 검색 트리에서 최소 항목 찾기 
+
+- BST에서 최소값은 자식을 갖지 않은 제일 왼쪽 노드이다. 
+
+```
+    public BinarySearchTreeNode FindMin(BinarySearhTreeNode root) {
+        if (root == null) {
+            return null;
+        } else {
+            if (root.getLeft() == null) {
+                return root;
+            } else {
+                return (FindMin(root.getLeft());
+            }
+        }
+    }
+    
+    시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
+    공간 복잡도 : 재귀적 스택 때문에 O(n)
+    
+- 비 재귀적 방법
+    public BinarySearchTreeNode FindMin(BinarySearchTreeNode root) {
+        if (root == null) return null;
+        else {
+            while(root.getLeft() != null){
+                root = root.getLeft();
+            }
+            return root;
+        }
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+    
+```
+
+### 이진 검색 트리에서 최대 항목 찾기 
+
+- BST에서 최소값은 자식을 갖지 않은 제일 오른쪽 노드이다. 
+
+```
+    public BinarySearchTreeNode FindMax(BinarySearchTreeNode root) {
+        if (root == null) {
+            return null;
+        } else {
+            if (root.getRight() == null) {
+                return root;
+            } else {
+                return (FindMax(root.getRight());
+            }
+        }
+    }
+    
+    시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
+    공간 복잡도 : 재귀적 스택 때문에 O(n)
+
+- 비 재귀적 방법
+    public BinarySearchTreeNode FindMax(BinarySearchTreeNode root) {
+        if (root == null) return null;
+        while (root != root.getRight()) {
+            root = root.getRight();
+        }
+        return root;
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+    
+```
+
+### 중위 전임 노드와 후임 노드는 어디에 있는가 ?
+
+- X가 두 개의 자식 노드를 가진 다면 중위 전임 노드는 왼쪽 서브 트리의 최대값이고 중위 후임 노든 오른쪽 서브 트리의 최소 값이다. 
+- 왼쪽 자식 노드가 없다면 중위 전임 노드는 첫 번째 왼쪽 조상 노드이다.
+
+### 이진 검색 트리에 항목 삽입하기 
+
+1. 데이터를 삽입할 위치를 찾는다.
+2. 위치를 찾는 동안 데이터가 존재하면 무시하고 나오면 된다. 
+3. 그렇지 않으면 탐색한 경로의 마지막 위치에 데이터를 추가 한다. 
+
+```
+    public BinarySearchTreeNode Insert(BinarySearchTreeNode root, int data){
+        if (root == null) {
+            root = new BinarySearchTreeNode();
+            if (root == null) {
+                System.out.println("Memory Error");
+                return null;
+            } else {
+                root.setData(data);
+                root.setLeft(null);
+                root.setRight(null);
+            }
+        } else {
+            if (data < root.getData()) {
+                root.setLeft(Insert(root.getLeft(), data));
+            } else if (data > root.getData()) {
+                root.setRight(Insert(root.getRight(), data));
+            }
+            return root;
+        }
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : 재귀적 스택은 O(n) 반복접 방법은 O(1)
+```
   
-  
+
+
   
   
   
