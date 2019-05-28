@@ -397,10 +397,28 @@ Tree 이해
 
 ### 스레드 이진 트리의 구조
 
+- 트리를 검사하는 프로그램이라면 일반적으로 왼쪽, 오른쪽 포인터와 스레드를 구분할 수 있어야 한다. 
+- 각 노드에 두개의 항목을 추가로 넣는다. 
+- Left(포인터) | LTag | data | RTag | Right(포인터) 이런 형태를 갖는다. 
+```
+    public class ThreadedBinaryTreeNode {
+        public ThreadedBinaryTreeNode left;
+        public int LTag;
+        public int RTag;
+        public ThreadedBinaryTreeNode right;
+        ...
+    }
+```
 
+### 이진트리와 스레드 이진 트리의 구조 차이점
 
-  
-  
+* * *
+|              |일반적인 이진 트리  |스레드 이진 트리 |
+|:------------ | :-------------  | :--------------------------- |
+|ifLtag == 0   | NULL            | 왼쪽 포인터는 중위 전임 노들을 가리킴 |
+|ifLtag == 1   | 왼쪽 포인터는 왼쪽 자식을 가리킴 | 왼쪽 포인터는 왼쪽 자식을 가리킴 |
+|ifRtag == 0   | NULL            | 오른쪽 포인터는 중위 후임 노들을 가리킴 |  
+|ifRtag == 1   | 오른쪽 포인터는 오른쪽 자식을 가리킴 | 오른쪽 포인터는 오른쪽 자식을 가리킴 |  
   
   
   
