@@ -422,14 +422,145 @@ Tree 이해
 |ifLtag == 1   | 왼쪽 포인터는 왼쪽 자식을 가리킴 | 왼쪽 포인터는 왼쪽 자식을 가리킴 |
 |ifRtag == 0   | NULL            | 오른쪽 포인터는 중위 후임 노들을 가리킴 |  
 |ifRtag == 1   | 오른쪽 포인터는 오른쪽 자식을 가리킴 | 오른쪽 포인터는 오른쪽 자식을 가리킴 |  
-> [!NOTE]
+
 > 유사하게 전위/후위의 차이점도 정의할 수 있다. 
 
+### 제일 왼쪽 포인터와 제일 오른쪽 포인터는 무엇을 가리켜야 하는가?
 
+- 빈 트리에도 더미 노드를 설정하는 것이 좋다. (예를 들어 자기 자신)
+
+### 중위 스레드 이진 트리에서 중위 후임 노드 찾기 
+
+- 스택을 사용하지 않고 중위 후임노드를 찾으려 사용하는 노드를 P라고 하자. 
+- P에서 오른쪽 서브 트리가 없다면 P의 오른쪽 자식 노드를 리턴한다. 만약 P에게 오른쪽 서브 트리가 있다면 그 노드의 왼쪽 서브 트리에 P를 포함하는
+가장 가까운 노드의 왼쪽 자식 노드를 리턴한다. 
+
+```
+     public ThreadedBinaryTreeNode InorderSuccessor(ThreadedBinaryTreeNode P){
+        ThreadedBinaryTreeNode Position;
+        if (P.RTag == 0) { //오른쪽 서브트리가 없다면 P의 오른쪽 자식노드를 반환 
+            return P.getRight();
+        } else {
+            Position = P.getRight();
+            while(Position.getLTag() == 1){
+                Position = Position.getLeft();
+            }
+            return Position;
+        }
+     }
+     시간 복잡도 : O(n)
+     공간 복잡도 : O(1)
+```
   
-  
-  
-  
+### 중위 스레드 이진 트리에서 중위 탐색하기
+
+- 더미노드에서 시작해서 다시 더미 노드에 닿을 때까지 InorderSuccessor()를 호출하여 모든 노드를 방문 할 수 있다. 
+
+```
+    public void InorderTraversal(ThreadedBinaryTreeNode root) {
+        ThreadedBinaryTreeNode P = InorderSuccessor(root);
+        while(P != root) {
+            P = InorderSuccessor(P);
+            System.out.println(P.getData());
+        }
+    }
+- 다른 방법
+    public void InorderTraversal(ThreadedBinaryTreeNode root) {
+        ThreadedBinaryTreeNode P = root;
+        while(1) {
+            P = InorderSuccessor(P);
+            if (P == root) return;
+            System.out.println(P.getData());
+        }
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+    
+```
+
+### 중위 스레드 이진 트리에서 전위 후임 노드찾기
+
+- P에서 왼쪽 서브 트리가 있다면 P의 왼쪽 자식 노드를 리턴한다. P에게 왼쪽 서브 트리가 없다면 그 노드의 오른쪽 서브 트리에 P를 
+포함하는 가장 가까운 노드의 오른쪽 자식 노드를 리턴한다.
+```
+    public ThreadedBinaryTreeNode PreorderSuccessor(ThreadedBinaryTreeNode P) {
+        ThreadedBinaryTreeNode Position;
+        if (P.getTag() == 1) {
+            return P.getLeft();
+        } else {
+            Position = P;
+            while (Position.getRTag() == 0) {
+                Position = Position.getRight();
+            }
+            return Position.getRight();
+        }
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+    
+```
+
+### 중위 스레드 이진 트리에서 전위 탐색하기 
+
+- 중위 탐색과 유사하게 더미 노드에서 시작해서 다음 더미 노드에 닿을 때까지 PreorderSuccessor()를 호출하여 모든 노드를 방문할 수 있다. 
+
+```
+    public void PreorderTraversal(ThreadedBinaryTreeNode root) {
+        ThreadedBinaryTreeNode P;
+        P = PreorderSuccessor(root);
+        while (P != root) {
+            P = PreorderSuccessor(P);
+            System.out.println(P.getData());
+        }
+    }
+
+다른 방법 : 
+    public void PreorderTraversal(ThreadedBinaryTreeNode root) {
+        ThreadedBinaryTreeNode P;
+        while(1) {
+            P = PreorderSuccessor(P);
+            if (P == root) {
+                return;
+            }
+            System.out.println(P.getData());
+        }
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+    
+``` 
+
+### 중위 스레드 이진 트리에 노드 삽입하기 
+
+- P와 Q 노드가 있다. Q를 P의 오른쪽에 추가하려고 한다. 이 때 두가지 경우가 있다. 
+
+    1. P 노드에 오른쪽 자식이 없으 경우 Q를 P에 추가하고 Q 노드의 왼쪽, 오른쪽 포인터만 바꾸면 된다. 
+    2. P 노드에 오른쪽 자식 (R)이 있는 경우 R의 왼쪽 서브 트리를 탐색해서 제일 왼쪽 노드를 찾아 그 노드의(S) 왼쪽 포인터를 바꿔야 한다. 
+
+```
+    public void ThreadedBinaryTreeNodeAdd(ThreadedBinaryTreeNode P){
+        ThreadedBinaryTreeNode Q;
+        ThreadedBinaryTreeNode temp;
+        Q.setRight(P.getRight());
+        Q.setLeft(P);
+        Q.setLTage(0);
+        Q.setRight(Q);
+        Q.setRTag(1);
+        if (Q.getRTag() ==1) { //두번째 경우
+            Temp = Q.getRight();
+            while (Temp.getLTag())
+                Temp = Temp.getLeft();
+            Temp.setLeft(Q);
+        }
+    }
+    
+    시간 복잡도 : O(n)
+    공간 복잡도 : O(1)
+    
+```    
   
   
   
