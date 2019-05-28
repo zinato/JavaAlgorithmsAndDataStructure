@@ -1004,6 +1004,51 @@ public class Question {
 
     }
 
+    //45. 주어진 이진트리에서 전위 후임 노드를 어떻게 찾을 수 있는가?
+    /*
+        부가적으로 스택 S가 필요하다.
+        처음 호출될 때 파라미터 노드는 트리의 머리를 가리키는 포인터, 그 다음은 null
+        함수를 호출 했을 때 노드의 후임노드를 구하는 것이므로  스택 S의 내용과 마지막으로 방문했던 노드를 가리키는 포인터 P가 보존되어야 하는 것이
+        중요함으로 둘다 정적 변수로 선언됨.
+     */
+
+    public ThreadedBinaryTreeNode PreorderSuccessor(BinaryTreeNode node) {
+        static BinaryTreeNode P;
+        LLStack S = new LLStack();
+        if (node != null) {
+            P = node;
+        }
+        if (P.getLeft() != null) {
+            S.push(P);
+            P = P.getLeft();
+        } else {
+            while (P.getRight() == null) {
+                P = S.pop();
+            }
+            P = P.getRight();
+        }
+        return P;
+    }
+
+    //46. 주어진 이진 트리(스레드가 아닌)에서 중위 후임 노드를 어떻게 찾을 수 있는가?
+    public ThreadedBinaryTreeNode InorderSuccessor(BinaryTreeNode node) {
+        static BinaryTreeNode P;
+        LLStack S = new LLStack();
+        if (node != null) {
+            P = node;
+        }
+        if (P.getRight() == null) {
+            P = S.pop();
+        } else {
+            P = P.getRight();
+            while (P.getLeft() != null) {
+                S.push(P);
+            }
+            P = P.getLeft();
+        }
+        return P;
+    }
+
 
 
 } // end of Question class
