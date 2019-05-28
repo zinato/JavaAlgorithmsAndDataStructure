@@ -250,7 +250,7 @@ Tree 이해
 끝내고 온 것인지 구분할 수 있다. 
 - 이 둘이 같다면 왼쪽 서브트리와 오른쪽 서브트리 처리를 마친 것이다. 스택을 한번 더 pop한 뒤 데이터를 출력한다.
 
-```
+``` 
    void PostOrderNonRecursive(BinaryTreeNode root){
         LLStack stack = new LLStack();
         while(1){
@@ -302,7 +302,7 @@ Tree 이해
 4. 1~3을 모든 레벨이 끝날 때까지 반복한다. 
 
 ```
-    void LevelOrder(BinaryTreeNode root) {
+    public void LevelOrder(BinaryTreeNode root) {
         BinaryTreeNode temp;
         LLQueue queue = new LLQueue();
         if (root == null) {
@@ -323,8 +323,8 @@ Tree 이해
             }
         }
     }
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(n) //최악의 경우 마지막 레벨의 모든 항목이 순차적으로 큐에 있을 수 있기 때문에
+    //시간 복잡도 : O(n)
+    //공간 복잡도 : O(n) 최악의 경우 마지막 레벨의 모든 항목이 순차적으로 큐에 있을 수 있기 때문에
 ```  
  
 ## 범용 트리 (N항 트리)
@@ -412,7 +412,6 @@ Tree 이해
 
 ### 이진트리와 스레드 이진 트리의 구조 차이점
 
-* * *
 |              |일반적인 이진 트리  |스레드 이진 트리 |
 |:------------ | :-------------  | :--------------------------- |
 |ifLtag == 0   | NULL            | 왼쪽 포인터는 중위 전임 노들을 가리킴 |
@@ -420,9 +419,7 @@ Tree 이해
 |ifRtag == 0   | NULL            | 오른쪽 포인터는 중위 후임 노들을 가리킴 |  
 |ifRtag == 1   | 오른쪽 포인터는 오른쪽 자식을 가리킴 | 오른쪽 포인터는 오른쪽 자식을 가리킴 |  
   
-  
-  
-  
+
   
   
   
