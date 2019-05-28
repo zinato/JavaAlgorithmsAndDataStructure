@@ -26,3 +26,7 @@ hs_err_pid*
 .idea/workspace.xml
 /out
 *.xml
+.idea/dictionaries/Hyunil.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
