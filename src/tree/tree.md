@@ -599,7 +599,7 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
 - 찾는 데이터가 root 면 현재 노드를 리턴, 현재 root의 값보다 작으면 왼쪽 서브트리를 탐색, root 값보다 크면 오른쪽 서브트리를 탐색해서 찾는다. 
 - 찾는 데이터가 없으면 NULL을 리턴. 
 
-```
+```java
      public BinarySearchTreeNode Find(BinarySearchTreeNode root, int data) {
         if (root == null) return null;
         if (data < root.getData()) {
@@ -613,7 +613,7 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
      시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
      공간 복잡도 : 재귀적 스택 때문에 O(n)
      
- - 비 재귀적 방법
+// 비 재귀적 방법
     public BinarySearchTreeNode Find(BinarySearchTreeNode root, int data) {
         if (root == null) return null;
         while(root != null) {
@@ -628,8 +628,8 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         return null;
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(1)
  
 ```  
 
@@ -637,7 +637,7 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
 
 - BST에서 최소값은 자식을 갖지 않은 제일 왼쪽 노드이다. 
 
-```
+```java
     public BinarySearchTreeNode FindMin(BinarySearhTreeNode root) {
         if (root == null) {
             return null;
@@ -650,10 +650,10 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         }
     }
     
-    시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
-    공간 복잡도 : 재귀적 스택 때문에 O(n)
+    //시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
+    //공간 복잡도 : 재귀적 스택 때문에 O(n)
     
-- 비 재귀적 방법
+// 비 재귀적 방법
     public BinarySearchTreeNode FindMin(BinarySearchTreeNode root) {
         if (root == null) return null;
         else {
@@ -664,8 +664,8 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         }
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+    //시간 복잡도 : O(n)
+    //공간 복잡도 : O(1)
     
 ```
 
@@ -673,7 +673,7 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
 
 - BST에서 최소값은 자식을 갖지 않은 제일 오른쪽 노드이다. 
 
-```
+```java
     public BinarySearchTreeNode FindMax(BinarySearchTreeNode root) {
         if (root == null) {
             return null;
@@ -686,10 +686,10 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         }
     }
     
-    시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
-    공간 복잡도 : 재귀적 스택 때문에 O(n)
+ //   시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
+ //   공간 복잡도 : 재귀적 스택 때문에 O(n)
 
-- 비 재귀적 방법
+// 비 재귀적 방법
     public BinarySearchTreeNode FindMax(BinarySearchTreeNode root) {
         if (root == null) return null;
         while (root != root.getRight()) {
@@ -698,8 +698,8 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         return root;
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(1)
     
 ```
 
@@ -714,7 +714,7 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
 2. 위치를 찾는 동안 데이터가 존재하면 무시하고 나오면 된다. 
 3. 그렇지 않으면 탐색한 경로의 마지막 위치에 데이터를 추가 한다. 
 
-```
+```java
     public BinarySearchTreeNode Insert(BinarySearchTreeNode root, int data){
         if (root == null) {
             root = new BinarySearchTreeNode();
@@ -736,11 +736,15 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         }
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : 재귀적 스택은 O(n) 반복접 방법은 O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : 재귀적 스택은 O(n) 반복접 방법은 O(1)
 ```
-  
 
+### 이진 검색 트리에서 항목 삭제하기 
+
+- 먼저 삭제할 노드가 leaf인지 아닌지 구분해야 한다. 
+- 삭제할 항목이 잎 노드라면 NULL을 부모 노드에게 리턴한다. 
+- 
 
   
   
