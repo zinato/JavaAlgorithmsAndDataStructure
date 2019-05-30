@@ -144,16 +144,16 @@ Tree 이해
 - 뿌리를 방문한다.
 - 전위 탐색으로 왼쪽 트리를 탐색한다.
 - 전위 탐색으로 오른쪽 트리를 탐색한다. 
-```
-   void PreOrder(BinaryTreeNode root){
+```java
+   public void PreOrder(BinaryTreeNode root){
     if (root != null) {
         System.out.println(root.getData());
         PreOrder(root.getLeft());
         PreOrder(root.getRight());
     }
    }
-   시간 복잡도 :O(n)
-   시간 복잡도 :O(n)
+ //  시간 복잡도 :O(n)
+ //  시간 복잡도 :O(n)
 ```
 ### 비재귀적 전위 탐색
 
@@ -162,8 +162,8 @@ Tree 이해
     2. 왼쪽 서브 트리 처리가 끝난 뒤 항목을 팝해서 오른쪽 서브 트리로 이동한다. 
     3. 1,2 과정을 스택이 비지 않는 동안 계속한다. 
 
-```
-    void PreOrderNonRecursive(BinaryTreeNode root){
+```java
+    public void PreOrderNonRecursive(BinaryTreeNode root){
         if (root == null) return null;
         LLStack stack = new LLStack();
         while(true){
@@ -178,8 +178,8 @@ Tree 이해
         }
         return;
     }
-    시간 복잡도: O(n)
-    공간 복잡도: O(n)
+ //   시간 복잡도: O(n)
+ //   공간 복잡도: O(n)
 ```
 
 ### 중위 탐색
@@ -188,23 +188,23 @@ Tree 이해
 - 뿌리노드를 방문한다.
 - 오른쪽 서브트리를 중위 탐색으로 탐색한다.
 
-```
-    void InOrder(BinaryTreeNode root){
+```java
+    public void InOrder(BinaryTreeNode root){
         if (root != null) {
             InOrder(root.getLeft());
             System.out.println(root.getData());
             InOrder(root.getRight());
         }
     }
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(n)
+//   시간 복잡도 : O(n)
+//   공간 복잡도 : O(n)
 ``` 
 
 ### 비재귀적 중위 탐색
 - 비재귀적 중위 탐색은 비재귀적 전위탐색과 비슷하다.
 - 차이점은 왼쪽 서브 트리로 가기전에 노드를 처리하는 대신에 pop한 뒤 왼쪽 서브 트리 처리가 끝난 뒤 노드를 처리하는 것이다.
-```
-    void InOrderNonRecursive(BinaryTreeNode root){
+```java
+    public void InOrderNonRecursive(BinaryTreeNode root){
         if (root == null) return null;
         LLStack stack = new LLStack();
         while (true) {
@@ -222,24 +222,24 @@ Tree 이해
         }
         return;
     }
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(n)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(n)
 ```
 ### 후위 탐색
 
 - 왼쪽 서브 트리를 후위 탐색으로 탐색한다.
 - 오른쪽 서브 트리를 후위 탐색으로 탐색한다.
 - 뿌리 노드를 방문한다. 
-```
-    void PostOrder(BinaryTreeNode root){
+```java
+    public void PostOrder(BinaryTreeNode root){
         if (root) {
             PostOrder(root.getLeft());
             PostOrder(root.getRight());
             System.out.println(root.getData());
         }
     }
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(n)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(n)
 ```   
 
 ### 비재귀적 후위 탐색
@@ -250,8 +250,8 @@ Tree 이해
 끝내고 온 것인지 구분할 수 있다. 
 - 이 둘이 같다면 왼쪽 서브트리와 오른쪽 서브트리 처리를 마친 것이다. 스택을 한번 더 pop한 뒤 데이터를 출력한다.
 
-``` 
-   void PostOrderNonRecursive(BinaryTreeNode root){
+```java 
+   public void PostOrderNonRecursive(BinaryTreeNode root){
         LLStack stack = new LLStack();
         while(1){
             if (root != null) {
@@ -281,8 +281,8 @@ Tree 이해
         }
         stack.deleteStack();
    }
-   시간 복잡도 : O(n)
-   공간 복잡도 : O(n)
+//   시간 복잡도 : O(n)
+//   공간 복잡도 : O(n)
 ``` 
   
 ### 전위, 중위, 후위 탐색의 선택방법
@@ -301,7 +301,7 @@ Tree 이해
 3. 다음 레벨로 가서 그 레벨의 모든 노드를 방문한다. 
 4. 1~3을 모든 레벨이 끝날 때까지 반복한다. 
 
-```
+```java
     public void LevelOrder(BinaryTreeNode root) {
         BinaryTreeNode temp;
         LLQueue queue = new LLQueue();
@@ -336,7 +336,7 @@ Tree 이해
 - 각 노드에서 부모가 같은 노드(형제 노드)들을 왼쪽에서 오른쪽으로 연결을 한다.
 - 첫번째 자식을 제외한 나머지 노드와의 연결을 삭제한다. 
 - 노드의 구성은 요소, 첫번째 자식, 다음 형제 로 구성된다. 
-```
+```java
     public class TreeNode {
         public int data;
         public TreeNode firstChild;
@@ -404,7 +404,7 @@ Tree 이해
 - 트리를 검사하는 프로그램이라면 일반적으로 왼쪽, 오른쪽 포인터와 스레드를 구분할 수 있어야 한다. 
 - 각 노드에 두개의 항목을 추가로 넣는다. 
 - Left(포인터) | LTag | data | RTag | Right(포인터) 이런 형태를 갖는다. 
-```
+```java
     public class ThreadedBinaryTreeNode {
         public ThreadedBinaryTreeNode left;
         public int LTag;
@@ -435,7 +435,7 @@ Tree 이해
 - P에서 오른쪽 서브 트리가 없다면 P의 오른쪽 자식 노드를 리턴한다. 만약 P에게 오른쪽 서브 트리가 있다면 그 노드의 왼쪽 서브 트리에 P를 포함하는
 가장 가까운 노드의 왼쪽 자식 노드를 리턴한다. 
 
-```
+```java
      public ThreadedBinaryTreeNode InorderSuccessor(ThreadedBinaryTreeNode P){
         ThreadedBinaryTreeNode Position;
         if (P.RTag == 0) { //오른쪽 서브트리가 없다면 P의 오른쪽 자식노드를 반환 
@@ -448,15 +448,15 @@ Tree 이해
             return Position;
         }
      }
-     시간 복잡도 : O(n)
-     공간 복잡도 : O(1)
+//     시간 복잡도 : O(n)
+//     공간 복잡도 : O(1)
 ```
   
 ### 중위 스레드 이진 트리에서 중위 탐색하기
 
 - 더미노드에서 시작해서 다시 더미 노드에 닿을 때까지 InorderSuccessor()를 호출하여 모든 노드를 방문 할 수 있다. 
 
-```
+```java
     public void InorderTraversal(ThreadedBinaryTreeNode root) {
         ThreadedBinaryTreeNode P = InorderSuccessor(root);
         while(P != root) {
@@ -464,7 +464,7 @@ Tree 이해
             System.out.println(P.getData());
         }
     }
-- 다른 방법
+// 다른 방법
     public void InorderTraversal(ThreadedBinaryTreeNode root) {
         ThreadedBinaryTreeNode P = root;
         while(1) {
@@ -474,8 +474,8 @@ Tree 이해
         }
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(1)
     
 ```
 
@@ -483,7 +483,7 @@ Tree 이해
 
 - P에서 왼쪽 서브 트리가 있다면 P의 왼쪽 자식 노드를 리턴한다. P에게 왼쪽 서브 트리가 없다면 그 노드의 오른쪽 서브 트리에 P를 
 포함하는 가장 가까운 노드의 오른쪽 자식 노드를 리턴한다.
-```
+```java
     public ThreadedBinaryTreeNode PreorderSuccessor(ThreadedBinaryTreeNode P) {
         ThreadedBinaryTreeNode Position;
         if (P.getTag() == 1) {
@@ -497,8 +497,8 @@ Tree 이해
         }
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(1)
     
 ```
 
@@ -506,7 +506,7 @@ Tree 이해
 
 - 중위 탐색과 유사하게 더미 노드에서 시작해서 다음 더미 노드에 닿을 때까지 PreorderSuccessor()를 호출하여 모든 노드를 방문할 수 있다. 
 
-```
+```java
     public void PreorderTraversal(ThreadedBinaryTreeNode root) {
         ThreadedBinaryTreeNode P;
         P = PreorderSuccessor(root);
@@ -516,7 +516,7 @@ Tree 이해
         }
     }
 
-다른 방법 : 
+// 다른 방법 : 
     public void PreorderTraversal(ThreadedBinaryTreeNode root) {
         ThreadedBinaryTreeNode P;
         while(1) {
@@ -528,8 +528,8 @@ Tree 이해
         }
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(1)
     
 ``` 
 
@@ -540,7 +540,7 @@ Tree 이해
     1. P 노드에 오른쪽 자식이 없으 경우 Q를 P에 추가하고 Q 노드의 왼쪽, 오른쪽 포인터만 바꾸면 된다. 
     2. P 노드에 오른쪽 자식 (R)이 있는 경우 R의 왼쪽 서브 트리를 탐색해서 제일 왼쪽 노드를 찾아 그 노드의(S) 왼쪽 포인터를 바꿔야 한다. 
 
-```
+```java
     public void ThreadedBinaryTreeNodeAdd(ThreadedBinaryTreeNode P){
         ThreadedBinaryTreeNode Q;
         ThreadedBinaryTreeNode temp;
@@ -557,8 +557,8 @@ Tree 이해
         }
     }
     
-    시간 복잡도 : O(n)
-    공간 복잡도 : O(1)
+//    시간 복잡도 : O(n)
+//    공간 복잡도 : O(1)
     
 ```    
 
@@ -610,8 +610,8 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
         return root;
      }
      
-     시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
-     공간 복잡도 : 재귀적 스택 때문에 O(n)
+//     시간 복잡도 : 최악의 경우 (BST가 경사 트리일 때) O(n)
+//     공간 복잡도 : 재귀적 스택 때문에 O(n)
      
 // 비 재귀적 방법
     public BinarySearchTreeNode Find(BinarySearchTreeNode root, int data) {
