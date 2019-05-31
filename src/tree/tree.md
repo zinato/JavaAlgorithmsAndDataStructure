@@ -742,9 +742,42 @@ root만 바뀌고 첫번째, 세번째 단계는 변하지 않는다.
 
 ### 이진 검색 트리에서 항목 삭제하기 
 
-- 먼저 삭제할 노드가 leaf인지 아닌지 구분해야 한다. 
-- 삭제할 항목이 잎 노드라면 NULL을 부모 노드에게 리턴한다. 
-- 
+- 먼저 삭제하기 원하는 항목의 위치를 찾아야 한다.    
+- 삭제할 항목이 잎 노드라면 NULL을 부모 노드에게 리턴한다. (해당하는 자식 포인터를 NULL로 만든다는 것)
+- 삭제할 항목이 한 개의 자식 노드를 가진다면 현재 노드의 자식을 부모 노드에게 보낸다. 
+- 삭제할 항목이 두 개의 자식 노드를 가진다면 일반적으로 이 노드의 키 값을 왼쪽 서브트리의 최대 항목과 바꾸고 그 노드를 삭제한다. 왼쪽 서브 트리의 최대 항목은 오른쪽
+자식을 가질 수 없으므로 두번째 삭제는 쉽다. 
+```java
+    public BinarySearchTreeNode Delete(BinarySearchTreeNode root, int data) {
+        BinarySearchTreeNode temp;
+        if (root == null) {
+            System.out.println("Element not there in tree");
+        } else if (data < root.getData()) {
+            root.left = Delete(root.getLeft(), data);
+        } else if (data < root.getData()) {
+            root.right = Delete(root.getRight(), data);
+        } else { //항목을 찾음
+            if (root.getLeft() != null && root.getRight() != null) {
+                // 왼쪽 서브 트리의 최대 값과 교체한다. 
+                temp = FindMax(root.getLeft());
+                root.getData() = temp.element;
+                root.left = Delete(root.getLeft(), root.getData());
+            } else { //자식이 하나일 경우
+                temp = root;
+                if (root.getLeft() == null) {
+                    root = root.getRight();
+                }
+                if (root.getRight() == null) {
+                    root = root.getLeft();
+                }
+            }
+        }
+        return root;
+    }
+//  시간복잡도 : O(n)
+//  공간복잡도 : 재귀적 스택을 위해 O(n). 반복적 방법에서는 공간 복잡도가 O(1)이다. 
+```
+
 
   
   
